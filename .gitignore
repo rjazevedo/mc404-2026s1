@@ -1,0 +1,13 @@
+site
+Slides_old
+provas
+MC404*.csv
+*.pdf
+.vscode
+*.ods
+*.html
+Alunos.xlsx
+.DS_Store
+*.html
+
+
