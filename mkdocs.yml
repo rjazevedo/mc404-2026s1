@@ -72,6 +72,10 @@ nav:
   - Aulas:
       - Apresentação: slides/apresentacao.md
       - Assembly 01: slides/assembly01.md
+      - Assembly 02: slides/assembly02.md
+      - Representação Numérica: slides/binario01.md
   - Laboratórios:
       - Laboratório 1: lab01.md
       - Laboratório 2: lab02.md
+      - Laboratório 3: lab03.md
+      - Laboratório 4: lab04.md
