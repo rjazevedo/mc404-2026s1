@@ -1,0 +1,25 @@
+/* @theme h3-duas-colunas */
+
+@import 'default';
+
+section:has(> h3:nth-of-type(2)) {
+  columns: 2;
+  column-gap: 1.4em;
+  column-fill: auto;
+}
+
+section:has(> h3:nth-of-type(2))>h1,
+section:has(> h3:nth-of-type(2))>h2,
+section:has(> h3:nth-of-type(2))>header,
+section:has(> h3:nth-of-type(2))>footer {
+  column-span: all;
+}
+
+section:has(> h3:nth-of-type(2))>h3 {
+  break-after: avoid-column;
+  margin-top: 0;
+}
+
+section:has(> h3:nth-of-type(2))>h3:nth-of-type(2) {
+  break-before: column;
+}

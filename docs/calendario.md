@@ -20,15 +20,15 @@ As provas serão nos dias 22/abril e 17/junho.
 | seg - 16/mar | [Laboratório 4](lab04.md)                                                                                                                   |
 | qua - 18/mar | [Organização Básica de Computadores](slides/obc01.html) ([PDF](slides/obc01.pdf))                                                           |
 | sex - 20/mar | [Laboratório 4](lab04.md)                                                                                                                   |
-| seg - 23/mar |                                                                                                                                             |
-| qua - 25/mar |                                                                                                                                             |
-| sex - 27/mar |                                                                                                                                             |
-| seg - 30/mar |                                                                                                                                             |
+| seg - 23/mar | [Laboratório 5](lab05.md)                                                                                                                   |
+| qua - 25/mar | [Funções](slides/assembly03.html) ([PDF](slides/assembly03.pdf))                                                                            |
+| sex - 27/mar | [Laboratório 5](lab05.md)                                                                                                                   |
+| seg - 30/mar | [Laboratório 6](lab06.md)                                                                                                                   |
 | qua - 01/abr |                                                                                                                                             |
 | sex - 03/abr | Não haverá aula                                                                                                                             |
 | seg - 06/abr |                                                                                                                                             |
 | qua - 08/abr |                                                                                                                                             |
-| sex - 10/abr |                                                                                                                                             |
+| sex - 10/abr | [Laboratório 6](lab06.md)                                                                                                                   |
 | seg - 13/abr |                                                                                                                                             |
 | qua - 15/abr |                                                                                                                                             |
 | sex - 17/abr |                                                                                                                                             |

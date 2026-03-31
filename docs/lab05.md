@@ -12,7 +12,7 @@ Vamos trocar o simulador para realizar tarefas mais avançadas?
 
 Cada simulador tem uma forma diferente de apresentar exatamente o mesmo processador. Cada instrução do RISC-V é codificada exatamente da mesma forma em qualquer lugar, mas a forma de apresentar o código assembly (como arquivo, copiando e colando) pode variar entre os simuladores. Vamos instalar o plugin do VSCode e ver como ele funciona?
 
-Abra o VSCode e busque por **RISC-V Venus Simulator**. Instale o plugin e reinicie o VSCode (se necessário). Se não instalou ainda, recomendo também instalar o plugin **RISC-V Support**, para melhor visualizar seu código. As duas extensões estão indicadas na figura abaixo:
+Abra o VSCode e busque pelo plugin **RISC-V Venus Simulator**. Instale o plugin e reinicie o VSCode (se necessário). Se não instalou ainda, recomendo também instalar o plugin **RISC-V Support**, para melhor visualizar seu código. As duas extensões estão indicadas na figura abaixo:
 
 ![](vscode-venus.png)
 
@@ -34,7 +34,7 @@ main:
 Note que o seletor da ecall (1 para imprimir um número) deve ser colocado no registrador **a0** e o número a ser impresso deve ser colocado no registrador **a1**. Anteriormente eram usados **t0** e **a0**, agora sempre serão utilizados os registradores **a**. Você também deve encerrar o programa explicitamente, utilizando a ecall 10, como nas últimas linhas do código. 
 
 ??? tip "Dica"
-    Os programas devem continuar funcionando. O novo simulador continua sendo de um processador RISC-V
+    Os programas devem continuar funcionando. O novo simulador continua simulando um processador RISC-V
 
 ## Vamos revisar um código antigo?
 
@@ -147,7 +147,7 @@ Veja que não há definição do tamanho desse vetor, você simplesmente marcou 
     Declare 2 vetores com 5 elementos cada um e some os elementos de mesmo índice dos vetores e guarde o resultado em um terceiro vetor. Imprima a soma de todos os elementos do terceiro vetor na tela.
 
 ??? tip "Dica"
-    Embora não faça distinção no seu código, os dois vetores que serão apenas lidos devem ser declarados na região de memória para dados constantes (`.rodata`) e o vetor que será lido e escrito deve ser declarado na região de memória para dados variáveis (`.data`). **Utilize um laço for para facilitar essa atividade**.
+    Embora não faça distinção no seu código, os dois vetores que serão apenas lidos poderia ser declarados na região de memória para dados constantes (`.rodata`) mas o vetor que será lido e escrito deve ser declarado na região de memória para dados variáveis (`.data`). **Utilize um laço for para facilitar essa atividade**.
 
 ## E as matrizes?
 
@@ -219,57 +219,3 @@ Agora você tem consciência de que tudo o que seu computador sabe é ler e escr
 
 !!! success "Resumo"
     Você aprendeu como armazenar vetores em memória e ler e escrever nas posições de memória. Você também aprendeu a manipular strings e a declarar estruturas de dados. Além disso, você aprendeu a utilizar um novo simulador, o Venus, que tem mais recursos e uma interface mais amigável para a depuração do seu código.
-
-
-
-
-
-
-
-## O novo simulador tem mais recursos!
-
-Você lembra de ter perguntado se não existe uma instrução de multiplicação no RISC-V? A versão do processador do simulador antigo não tinha essa instrução mas a versão nova tem! Isso significa que você pode utilizar a instrução `mul` e suas variações, além da divisão (`div` e `rem`). Como exemplo, a instrução `mul t0, t1, a2` multiplica os valores contidos nos registradores **t1** e **a2** e guarda o resultado no registrador **t0**.
-
-!!! note "Atividade 3"
-    Modifique o código do programa anterior para utilizar a instrução `mul` ao invés da função `Multiplica`. Você deve remover a função `Multiplica` do seu código e implementar a multiplicação diretamente na função `MultiplicaVetor`.
-
-!!! note "Atividade 4"
-    Agora que você tem mais facilidade para digitar strings, coloque mensagens no seu código para indicar o produto dos números e também para falar que o programa acabou! A `ecall` de print_string é a 4.
-
-## Utilizando a matriz de pontos do simulador
-
-Seu simulador tem uma matriz de pontos, por padrão 10 x 10 pontos que pode ser visualizada utilizando a opção **Views > Led Matrix** do canto esquerdo da tela quando ele estiver ativo.
-
-Para escrever um ponto na tela, você deve utilizar a **ecall 0x100**, que recebe como parâmetros o **x** (16 bits mais significativos) e o **y** (16 bits menos significativos) do ponto e a cor em RGB. Por exemplo, para escrever um ponto vermelho na posição (2,4), você deve utilizar a seguinte instrução:
-
-```mipsasm
-li a0, 0x100
-li a1, 0x00020004
-li a2, 0x00FF0000
-ecall
-```
-
-O simulador também fornece a **ecall 0x101** para trocar a cor de todos os pontos da tela (o que equivale a limpar a tela se escolher branco ou preto). A chamada dessa syscall só precisa da cor em RGB. Por exemplo, para pintar a tela de branco, você deve utilizar o seguinte código:
-
-```mipsasm
-li a0, 0x101
-li a1, 0x00FFFFFF
-ecall
-```
-
-!!! note "Atividade 5"
-    Experimente desenhar com múltiplas cores no painel. Faça um programa que pinte a tela de branco e depois desenhe um quadrado deixando dois uma borda de dois pontos brancos em todos os lados. Faça esse quadrado trocar de cor múltiplas vezes (você pode adiccionar valores nas cores ou armazenar um conjunto de cores num vetor e troca-las). Veja quanto tempo seu simulador gasta para pintar um quadrado e procure ajustar a velocidade do seu programa.
-
-## Desafio final
-
-O desafio de hoje é simples e nada polêmico. Faça um programa que desenhe a bandeira do seu time preferido de futebol!
-
-!!! note "Atividade 6"
-    Faça um programa que pinte a bandeira do seu time preferido de futebol no display. Ou outro símbolo do seu agrado!
-
-## Conclusões
-
-Você trocou de simulador, notou que tem algumas pequenas diferenças de sintaxe, em geral para melhorar seu código e também aprendeu a interagir com o display!
-
-!!! success "Resumo"
-    Você desenhou a bandeira do seu time de futebol!
