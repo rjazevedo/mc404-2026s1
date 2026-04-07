@@ -23,7 +23,7 @@ A bibliografia recomendada é:
 
 * Edson Borin. [An Introduction to Assembly Programming with RISC-V](https://riscv-programming.org/book.html). 2019. Disponível online.
 * David Patterson, Anderson Waterman. [Guia Prático RISC-V: Atlas de uma arquitetura aberta](http://riscvbook.com/portuguese). 2019. Disponível online.
-* [Manuais e documentação](https://riscv.org/technical/specifications) do processador RISC-V, em especial a [Especificação das Instruções](https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf).
+* [Manuais e documentação](https://riscv.org/technical/specifications) do processador RISC-V, em especial a [Especificação das Instruções](https://github.com/riscv/riscv-isa-manual).
 * Slides de aula.
 * Simuladores: [RISC-V Simulator](https://ascslab.org/research/briscv/simulator/simulator.html), [RISC-V Interpreter](https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter), [Venus](https://venus.kvakil.me), [QtRVSim](https://comparch.edu.cvut.cz/qtrvsim/app).
 

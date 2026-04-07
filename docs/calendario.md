@@ -24,14 +24,14 @@ As provas serão nos dias 22/abril e 17/junho.
 | qua - 25/mar | [Funções](slides/assembly03.html) ([PDF](slides/assembly03.pdf))                                                                            |
 | sex - 27/mar | [Laboratório 5](lab05.md)                                                                                                                   |
 | seg - 30/mar | [Laboratório 6](lab06.md)                                                                                                                   |
-| qua - 01/abr |                                                                                                                                             |
+| qua - 01/abr | [Revisitando Conjunto de Instruções e Funções](slides/assembly04.html) ([PDF](slides/assembly04.pdf))                                       |
 | sex - 03/abr | Não haverá aula                                                                                                                             |
-| seg - 06/abr |                                                                                                                                             |
+| seg - 06/abr | [Laboratório 7](lab07.md)                                                                                                                   |
 | qua - 08/abr |                                                                                                                                             |
 | sex - 10/abr | [Laboratório 6](lab06.md)                                                                                                                   |
-| seg - 13/abr |                                                                                                                                             |
+| seg - 13/abr | Laboratório extra para completar atividades passadas                                                                                        |
 | qua - 15/abr |                                                                                                                                             |
-| sex - 17/abr |                                                                                                                                             |
+| sex - 17/abr | [Laboratório 7](lab07.md)                                                                                                                   |
 | seg - 20/abr | Não haverá aula                                                                                                                             |
 | qua - 22/abr | Prova 1                                                                                                                                     |
 | sex - 24/abr |                                                                                                                                             |

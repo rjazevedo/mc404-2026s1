@@ -76,6 +76,7 @@ nav:
       - Representação Numérica: slides/binario01.md
       - Organização Básica de Computadores: slides/obc01.md
       - Funções: slides/assembly03.md
+      - Revisitando Conjunto de Instruções e Funções: slides/assembly04.md
   - Laboratórios:
       - Laboratório 1: lab01.md
       - Laboratório 2: lab02.md
@@ -83,3 +84,4 @@ nav:
       - Laboratório 4: lab04.md
       - Laboratório 5: lab05.md
       - Laboratório 6: lab06.md
+      - Laboratório 7: lab07.md

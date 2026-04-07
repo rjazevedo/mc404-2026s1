@@ -1,3 +1,9 @@
+.data
+
+a: .space 20
+
+.text
+
 mul t0, t1, t2
 l:
 addi s0, s1, 20 # 01 44 84 13

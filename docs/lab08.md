@@ -109,11 +109,11 @@ Ao contrário do simulador anterior, agora você precisa ler strings caracter po
 1. Executar a chamada de sistema `0x130` para indicar que tem intenção de ler algo do teclado.
 1. Executar, dentro de um laço, a chamada de sistema `0x131` para verificar se tem algum caracter disponível até não encontrar mais caracteres. A chamada 0x131 pode retornar os seguintes valores:
 
-| Valor de a0 | Significado |
-|:----:|-------------|
-| 0x00 | Todos os caracteres já foram lidos |
-| 0x01 | Ainda não tem caracter disponível |
-| 0x02 | Tem caracter disponível e foi lido, o código dele está em a1 |
+| Valor de a0 | Significado                                                  |
+| :---------: | ------------------------------------------------------------ |
+|    0x00     | Todos os caracteres já foram lidos                           |
+|    0x01     | Ainda não tem caracter disponível                            |
+|    0x02     | Tem caracter disponível e foi lido, o código dele está em a1 |
 
 Então, se você quiser ler uma string, você precisa fazer um laço que verifica se tem caracter disponível e, se tiver, lê o caracter e armazena em algum lugar. Você pode armazenar em um vetor de caracteres ou em uma string já alocada. Se você armazenar em um vetor, você precisa ter um contador para saber quantos caracteres já foram lidos. Não se esqueça de colocar um caracter \0 ao final da string.
 
@@ -131,7 +131,7 @@ Qual o tamanho máximo que a string do programa anterior pode ter? Seu programa 
 
 ## Mais funções sobre strings
 
-Agora que você já sabe ler strings, você pode implementar outras funções sobre strings. Você pode implementar as seguintes funções:
+Agora que você já sabe ler strings, você pode implementar outras funções sobre strings. Implemente as seguintes funções:
 
 * `int strlen(char *s)` que retorna o tamanho da string `s`.
 * `int strcmp(char *s1, char *s2)` que compara as strings `s1` e `s2` e retorna 0 se elas forem iguais, um valor negativo se `s1` for menor que `s2` e um valor positivo se `s1` for maior que `s2`.

@@ -20,97 +20,101 @@ http://www.ic.unicamp.br/~rodolfo/mc404
 
 ## Instruções de Load
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| LB rd, rs1, imm | I | Load Byte |
-| LH rd, rs1, imm | I | Load Halfword |
-| LW rd, rs1, imm | I | Load Word |
-| LBU rd, rs1, imm | I | Load Byte Unsigned |
-| LHU rd, rs1, imm | I | Load Halfword Unsigned |
+| Instrução        | Formato | Descrição              |
+| ---------------- | :-----: | ---------------------- |
+| LB rd, rs1, imm  |    I    | Load Byte              |
+| LH rd, rs1, imm  |    I    | Load Halfword          |
+| LW rd, rs1, imm  |    I    | Load Word              |
+| LBU rd, rs1, imm |    I    | Load Byte Unsigned     |
+| LHU rd, rs1, imm |    I    | Load Halfword Unsigned |
 
 ## Instruções de Store
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| SB rs2, rs1, imm | S | Store Byte |
-| SH rs2, rs1, imm | S | Store Halfword |
-| SW rs2, rs1, imm | S | Store Word |
+| Instrução        | Formato | Descrição      |
+| ---------------- | :-----: | -------------- |
+| SB rs2, rs1, imm |    S    | Store Byte     |
+| SH rs2, rs1, imm |    S    | Store Halfword |
+| SW rs2, rs1, imm |    S    | Store Word     |
 
 ## Instruções Aritméticas
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| ADD rd, rs1, rs2 | R | Add |
-| ADDI rd, rs1, imm | I | Add Immediate |
-| SUB rd, rs1, rs2 | R | Subtract |
-| LUI rd, imm | U | Load Upper Immediate |
-| AUIPC rd, imm | U | Add Upper Immediate to PC |
+| Instrução         | Formato | Descrição                 |
+| ----------------- | :-----: | ------------------------- |
+| ADD rd, rs1, rs2  |    R    | Add                       |
+| ADDI rd, rs1, imm |    I    | Add Immediate             |
+| SUB rd, rs1, rs2  |    R    | Subtract                  |
+| LUI rd, imm       |    U    | Load Upper Immediate      |
+| AUIPC rd, imm     |    U    | Add Upper Immediate to PC |
 
 ## Instruções Lógicas
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| XOR rd, rs1, rs2 | R | Exclusive OR |
-| XORI rd, rs1, imm | I | Exclusive OR Immediate |
-| OR rd, rs1, rs2 | R | OR |
-| ORI rd, rs1, imm | I | OR Immediate |
-| AND rd, rs1, rs2 | R | AND |
-| ANDI rd, rs1, imm | I | AND Immediate |
+| Instrução         | Formato | Descrição              |
+| ----------------- | :-----: | ---------------------- |
+| XOR rd, rs1, rs2  |    R    | Exclusive OR           |
+| XORI rd, rs1, imm |    I    | Exclusive OR Immediate |
+| OR rd, rs1, rs2   |    R    | OR                     |
+| ORI rd, rs1, imm  |    I    | OR Immediate           |
+| AND rd, rs1, rs2  |    R    | AND                    |
+| ANDI rd, rs1, imm |    I    | AND Immediate          |
 
 ## Instruções de Deslocamento
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| SLL rd, rs1, rs2 | R | Shift Left Logical |
-| SLLI rd, rs1, imm | I | Shift Left Logical Immediate |
-| SRL rd, rs1, rs2 | R | Shift Right Logical |
-| SRLI rd, rs1, imm | I | Shift Right Logical Immediate |
-| SRA rd, rs1, rs2 | R | Shift Right Arithmetic |
-| SRAI rd, rs1, imm | I | Shift Right Arithmetic Immediate |
+| Instrução         | Formato | Descrição                        |
+| ----------------- | :-----: | -------------------------------- |
+| SLL rd, rs1, rs2  |    R    | Shift Left Logical               |
+| SLLI rd, rs1, imm |    I    | Shift Left Logical Immediate     |
+| SRL rd, rs1, rs2  |    R    | Shift Right Logical              |
+| SRLI rd, rs1, imm |    I    | Shift Right Logical Immediate    |
+| SRA rd, rs1, rs2  |    R    | Shift Right Arithmetic           |
+| SRAI rd, rs1, imm |    I    | Shift Right Arithmetic Immediate |
 
 ## Instruções de Comparação
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| SLT rd, rs1, rs2 | R | Set Less Than |
-| SLTI rd, rs1, imm | I | Set Less Than Immediate |
-| SLTU rd, rs1, rs2 | R | Set Less Than Unsigned |
-| SLTIU rd, rs1, imm | I | Set Less Than Immediate Unsigned |
+| Instrução          | Formato | Descrição                        |
+| ------------------ | :-----: | -------------------------------- |
+| SLT rd, rs1, rs2   |    R    | Set Less Than                    |
+| SLTI rd, rs1, imm  |    I    | Set Less Than Immediate          |
+| SLTU rd, rs1, rs2  |    R    | Set Less Than Unsigned           |
+| SLTIU rd, rs1, imm |    I    | Set Less Than Immediate Unsigned |
 
 ## Instruções de Salto Condicionais
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| BEQ rs1, rs2, imm | SB | Branch if Equal |
-| BNE rs1, rs2, imm | SB | Branch if Not Equal |
-| BLT rs1, rs2, imm | SB | Branch if Less Than |
-| BGE rs1, rs2, imm | SB | Branch if Greater Than or Equal |
-| BLTU rs1, rs2, imm | SB | Branch if Less Than Unsigned |
-| BGEU rs1, rs2, imm | SB | Branch if Greater Than or Equal Unsigned |
+| Instrução          | Formato | Descrição                                |
+| ------------------ | :-----: | ---------------------------------------- |
+| BEQ rs1, rs2, imm  |   SB    | Branch if Equal                          |
+| BNE rs1, rs2, imm  |   SB    | Branch if Not Equal                      |
+| BLT rs1, rs2, imm  |   SB    | Branch if Less Than                      |
+| BGE rs1, rs2, imm  |   SB    | Branch if Greater Than or Equal          |
+| BLTU rs1, rs2, imm |   SB    | Branch if Less Than Unsigned             |
+| BGEU rs1, rs2, imm |   SB    | Branch if Greater Than or Equal Unsigned |
+
+* Pseudo-instruções de salto condicional são equivalentes à uma combinação das anteriores: `beqz`, `bnez`, `blez`, `bgez`, `bltz`, `bgtz`, `bgt`, `ble`, b`bgtu`, `bleu`.
 
 ## Instruções de Salto Incondicional
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| JAL rd, imm | UJ | Jump and Link |
-| JALR rd, rs1, imm | I | Jump and Link Register |
+| Instrução         | Formato | Descrição              |
+| ----------------- | :-----: | ---------------------- |
+| JAL rd, imm       |   UJ    | Jump and Link          |
+| JALR rd, rs1, imm |    I    | Jump and Link Register |
+
+* Pseudo-instruções de salto incondicional são construídas combinando as anteriores: `j`, `jr`, `ret`. 
 
 ## Instruções de Sistema
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| ECALL | I | Environment Call |
-| EBREAK | I | Environment Break |
+| Instrução | Formato | Descrição         |
+| --------- | :-----: | ----------------- |
+| ECALL     |    I    | Environment Call  |
+| EBREAK    |    I    | Environment Break |
 
-## Multiplicação e Divisão (não funciona nesse simulador)
+## Multiplicação e Divisão
 
-| Instrução | Formato | Descrição |
-|-----------|:-------:|-----------|
-| MUL rd, rs1, rs2 | R | Multiply |
-| DIV rd, rs1, rs2 | R | Divide |
-| DIVU rd, rs1, rs2 | R | Divide Unsigned |
-| REM rd, rs1, rs2 | R | Remainder |
-| REMU rd, rs1, rs2 | R | Remainder Unsigned |
+| Instrução         | Formato | Descrição          |
+| ----------------- | :-----: | ------------------ |
+| MUL rd, rs1, rs2  |    R    | Multiply           |
+| DIV rd, rs1, rs2  |    R    | Divide             |
+| DIVU rd, rs1, rs2 |    R    | Divide Unsigned    |
+| REM rd, rs1, rs2  |    R    | Remainder          |
+| REMU rd, rs1, rs2 |    R    | Remainder Unsigned |
 
 ## Mais exercícios
 
@@ -133,17 +137,17 @@ char *strcat(char *destination, const char *source);
 ```mipsasm
 strlen:
     addi sp, sp, -4
-    sw s0, sp, 0
+    sw s0, 0(sp)
     addi s0, zero, 0
 strlen_loop:
-    lbu t0, a0, 0
+    lbu t0, 0(a0)
     beq t0, zero, strlen_end
     addi s0, s0, 1
     addi a0, a0, 1
     j strlen_loop
 strlen_end:
     mv a0, s0
-    lw s0, s0, 0
+    lw s0, 0(sp)
     addi sp, sp, 4
     ret
 ```
@@ -154,7 +158,7 @@ strlen_end:
 strlen:
     addi t0, zero, 0
 strlen_loop:
-    lbu t0, a0, 0
+    lbu t0, 0(a0)
     beq t1, zero, strlen_end
     addi t0, t0, 1
     addi a0, a0, 1
@@ -171,9 +175,9 @@ strlen_end:
 
 ```mipsasm
 strcpy:
-    lbu t0, a1, 0
+    lbu t0, 0(a1)
     beq t0, zero, strcpy_end
-    sbu t0, a0, 0
+    sb  t0, 0(a0)
     addi a0, a0, 1
     addi a1, a1, 1
     j strcpy
@@ -189,8 +193,8 @@ strcpy_end:
 
 ```mipsasm
 strcmp:
-    lbu t0, a0, 0
-    lbu t1, a1, 0
+    lbu t0, 0(a0)
+    lbu t1, 0(a1)
     bne t0, t1, strcmp_cmp
     beq t0, zero, strcmp_neg
     beq t1, zero, strcmp_pos
@@ -207,6 +211,7 @@ strcmp_pos:
     addi a0, zero, 1
 strcmp_end:
     ret
+    
 ```
 
 ## char *strcat(char *destination, const char *source)
@@ -223,8 +228,8 @@ strcat_loop:
     addi a0, a0, 1
     j strcat_loop
 strcat_copy:
-    lbu 1, a1, 0
-    sbu t2, a0, 0
+    lbu t2, 0(a1)
+    sb  t2, 0(a0)
     beq t1, zero, strcat_end
     addi a0, a0, 1
     addi a1, a1, 1

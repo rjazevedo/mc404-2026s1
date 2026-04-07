@@ -111,15 +111,15 @@ Imagine que cada uma das funções abaixo foi implementada por um programador di
 
 ```mipsasm
 addi sp, sp, -8
-sw   ra, sp, 0
-sw   s0, sp, 4
+sw   ra, 0(sp)
+sw   s0, 4(sp)
 ``` 
 
 ### Removendo 2 elementos da pilha
 
 ```mipsasm
-lw   s0, sp, 4
-lw   ra, sp, 0
+lw   s0, 4(sp)
+lw   ra, 0(sp)
 addi sp, sp, 8
 ```
 
@@ -128,3 +128,105 @@ addi sp, sp, 8
 ## Exercício
 
 Suponha a existência das funções ```scanf``` e ```printf``` da linguagem C para ler e escrever dados. Implemente um código que leia um número inteiro N, limitado a 20, em seguida ele deve ler N números inteiros sinalizados, guardando cada um num vetor e imprimir a soma desses números. Para a realizar a soma deles, você deve implementar uma função à parte que recebe um vetor e o seu tamanho, retornando a soma que, posteriormente, será impressa. Seu código deve começar na função ```main```.
+
+## Implementação
+
+```mipsasm
+.data
+vetor: .space 80 # 20 números inteiros de 4 bytes cada
+.text
+main:
+    # Ler N
+    # Verificar se N é menor ou igual a 20
+    # Ler N números inteiros e armazenar no vetor
+    # Chamar a função somaVetor passando o vetor e N
+    # Imprimir o resultado da soma
+
+somaVetor:
+    # Recebe o vetor e o tamanho N
+    # Inicia um acumulador com zero
+    # Loop para somar os elementos do vetor
+    # Retorna a soma
+```
+
+## somaVetor
+
+```mipsasm
+somaVetor: # função folha
+    # a0: endereço do vetor
+    # a1: tamanho N do vetor
+    li   t0, 0          # acumulador para a soma
+    li   t1, 0          # índice do vetor
+loop:
+    beq  t1, a1, end    # se índice == N, termina o loop
+    lw   t2, 0(a0)      # carrega o elemento do vetor
+    add  t0, t0, t2     # acumula a soma
+    addi a0, a0, 4      # move para o próximo elemento do
+    addi t1, t1, 1      # incrementa o índice
+    j    loop           # repete o loop
+end:
+    mv a0, t0           # move a soma para a0 para retorno
+    ret
+```
+
+## leVetor
+
+```mipsasm
+.data
+  formato: .asciiz "%d"
+.text
+leVetor:
+    # a0: endereço do vetor
+    # a1: tamanho N do vetor
+    addi sp, sp, -8        # salvar s0 e s1 na pilha
+    sw   s0, 0(sp)
+    sw   s1, 4(sp)
+    mv   s0, a0
+    mv   s1, a1
+loop:
+    beq  s1, zero, end     # se índice == 0, termina o loop
+    la   a0, formato       # endereço do formato para leitura
+    mv   a1, s0            # endereço do próximo elemento do vetor
+    call scanf             # chama scanf para ler um número
+    addi s0, s0, 4         # move para o próximo elemento do vetor
+    addi s1, s1, -1        # decrementa o índice
+    j    loop              # repete o loop
+end:
+    lw   s0, 0(sp)         # restaurar s0 e s1 da pilha
+    lw   s1, 4(sp)
+    addi sp, sp, 8
+    ret
+
+```
+
+## main
+
+```mipsasm
+main:
+    addi sp, sp, -8
+    sw   s0, 0(sp)
+    sw   s1, 4(sp)
+leN:
+    la   a0, formato       # endereço do formato para leitura
+    call scanf             # chama scanf para ler N
+    # Verificar se N é menor ou igual a 20
+    li   t0, 20
+    bgt  a0, t0, leN       # se N > 20, volta para leN
+    la   s0, vetor         # endereço do vetor
+    mv   s1, a0            # guarda N em s1
+    mv   a0, s0            # endereço do vetor para leVetor
+    mv   a1, s1            # tamanho N para leVetor
+    call leVetor           # chama leVetor para ler os números
+    mv   a0, s0            # endereço do vetor para somaVetor
+    mv   a1, s1            # tamanho N para somaVetor
+    call somaVetor         # chama somaVetor para calcular a soma
+    # Imprimir o resultado da soma
+    mv   a1, a0            # resultado da soma em a1 para printf
+    la   a0, formato       # endereço do formato para impressão
+    call printf            # chama printf para imprimir a soma
+    lw   s0, 0(sp)         # restaurar s0 e s1 da pilha
+    lw   s1, 4(sp)
+    addi sp, sp, 8
+    ret
+
+```

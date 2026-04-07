@@ -320,6 +320,7 @@ N_Maiores_Que_Media:
   mv   a0, sp
   mv   a1, s0
   call Media     # (v, N)
+
 ```
 
 ## Continuando
@@ -347,6 +348,7 @@ N_Maiores_Que_Media:
   lw   s0, 12(sp)
   addi sp, sp, 16
   ret
+  
 ```
 
 ## Como fica a pilha nesse caso?

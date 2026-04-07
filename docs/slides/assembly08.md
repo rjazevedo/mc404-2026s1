@@ -5,7 +5,7 @@ _paginate: false
 footer: 'MC404 - Organização Básica de Computadores e Linguagem de Montagem - Rodolfo Azevedo - CC BY-SA 4.0'
 headingDivider: 2
 ---
-# Outras implementações de Assembly
+# Interação com Sistema Operacional
 
 Rodolfo Azevedo
 
@@ -13,225 +13,243 @@ MC404 - Organização Básica de Computadores e Linguagem de Montagem
 
 http://www.ic.unicamp.br/~rodolfo/mc404
 
-## ARM e x86
+## Entrada e Saída
 
-* São as duas arquiteturas mais utilizadas hoje em dia
-  * x86 em computadores/servidores
-  * ARM em sistemas embarcados em geral
-* Os usos estão se expandindo
-* Os slides a seguir contam um pouco do assembly de cada uma delas
-  * Atenção para a questão cronológica: o x86 é mais antigo que o ARM. O RISC-V é o mais novo de todos.
-  * Você viu RISC-V primeiro, então algumas comparações serão feitas nessa direção
+![h:200](processador-memoria.png)
 
-## ARM
+* O modelo anteriormente visto é muito simples e não permite que o processador interaja com o mundo externo.
+* Para resolver esse desafio, existem duas opções de interfaces entre o processador e mundo externo:
+  * Espaço de Endereçamento único
+  * Espaço de Endereçamento separado
 
-* Processador mais utilizado no mundo
-* Assembly com grande variedade de instruções
-* Diversas versões do processador
-* Várias extensões ao conjunto de instruções
-* Versões de 32 e 64 bits
+## Espaço de Endereçamento Único
 
-## Registradores
+![h:400](es-endereco-unificado.png)
 
-* 16 registradores de uso geral: r0, r1, … r15
-* Convenção de uso
-* 13 de uso geral: r0 … r12
-* 3 de uso especial: r13, r14, r15
-  * SP: r13
-  * LR: r14
-  * PC: r15
+* O processador apenas enxerga um único espaço de endereçamento, que contém tanto a memória quanto os periféricos.
+* As mesmas instruções podem acessar memória e periféricos (`lw`e `sw`)
 
-* Atenção para o PC como um registrador de uso geral
-  * Registrador de 32 bits com os últimos bits zerados
+## Espaço de Endereçamento Separado
 
-## Instruções Básicas
+![h:250](es-endereco-separado.png)
 
-![bg right h:600](instrucoes-arm.png)
+* O processador enxerga dois espaços de endereçamento distintos, um para memória e outro para periféricos.
+* Existem instruções distintas para acessar cada um dos endereços:
+  * `lw` e `sw` para memória
+  * `in` e `out` para periféricos (caso do x86)
 
-* Formato geral similar ao RISC-V
-* Exemplos:
-  * add r1, r2, r3
-  * add r1, r2, #50
-* Note instruções com carry (vai um)
-* Não há distinção de mnemônicos para imediato ou não
+## Prós e Contras
 
-## Execução condicional
+### Espaço de Endereçamento Unificado
 
-* Toda instrução de 32 bits pode ser condicional
-* Você sempre pode adicionar uma instrução de comparação e executar, daí em diante, as demais instruções condicionalmente
-* São 16 sufixos de condições. Os principais são:
-  * EQ: igual
-  * NE: diferente
-  * GT: maior
-  * LT: menor
-  * GE: maior ou igual
-  * LE: menor ou igual
-  * AL: sempre (default)
+* Simplicidade na visão do sistema e nas rotinas de acesso externos
+* Dificuldade de diferenciar código de entrada e saída de código de memória
+* Utilização do mesmo mecanismo de proteção de memória para entrada e saída
 
-## Instruções de salto
+### Espaço de Endereçamento Separado
 
-* B<condição> destino
-  * Salta para o destino (similar ao RISC-V)
-* BL<cond> função
-  * Equivalente al CALL, guarda o endereço de retorno no LR
-* MOV PC, LR
-  * Equivalente ao RET
+* Diferenciação clara entre código de entrada e saída e código de memória
+* Necessidade de instruções distintas para acesso a memória e periféricos
+* Necessidade de mecanismos de proteção de memória distintos para memória e periféricos
 
-## Exemplo: Maior Divisor Comum
+## Como isso se expande para um processador atual?
 
-![w:600](gcd.png)
+![h:550](es-memoria-atual.png)
+ 
+## Chamadas de Serviços do Sistema Operacional
 
-## Maior Divisor Comum (duas implementações)
+* O Sistema Operacional é o responsável por gerenciar os periféricos e a memória
+* Ele é responsável por garantir que os programas não acessem periféricos ou memória de forma indevida
+  * Um programa/processo não pode ler a memória de outro
+  * Um programa/processo não pode ler/escrever em um periférico diretamente sem a gestão do Sistema Operacional
+* Para isso, o Sistema Operacional disponibiliza uma interface para que os programas possam requisitar serviços
+  * Essa interface é chamada de **Chamadas de Serviços do Sistema Operacional** ou **System Calls**
+  * Vocês já utilizaram as `ecall` do RISC-V nesse semestre
 
-* Original
+## Padronizações e Convenções
+
+* As chamadas de sistema podem variar conforme:
+  * O Sistema Operacional utilizado
+  * O simulador utilizado (as vezes segue um SO, outras cria regras próprias)
+  * O grau de complexidade do ambiente simulado
+* Nunca deixe de consultar os manuais/referências para saber como utilizar as chamadas de sistema
+
+## Exceções e Interrupções
+
+* Eventos que podem causar a transferência da execução para outra parte do código, tipicamente para o Sistema Operacional
+
+### Exceções
+
+* Causas internas ao core
+* Divisão por zero, falha de página, etc
+
+### Interrupções
+
+* Causas externas ao core
+* Movimento do mouse, tecla digitada, dados prontos da rede ou disco
+
+> As rotinas de tratamento são similares, focaremos em interrupções
+
+## Como tratar uma interrupção?
+
+### Quais são as alternativas?
+
+* O processador ou o seu programa pode ficar perguntando o status de cada periférico
+  * Mecanismo similar ao que você fez ao ler do teclado
+  * Custo de ficar testando o tempo inteiro enquanto poderia estar fazendo outra tarefa
+* O periférico pode avisar o processador quando estiver pronto
+  * Mecanismo de interrupção
+  * O periférico avisa o processador quando estiver pronto
+  * O processador interrompe o programa atual e executa uma rotina de tratamento de interrupção
+
+## Espera ocupada
+
+* Também chamada de **polling** ou **busy waiting**
+* Funciona quando há baixa transferência de dados e sabe-se de antemão que o periférico vai transferir dados.
+  * Você fez isso ao ler do teclado
+  * Não havia mais nada para seu programa fazer
+  * Você sabia que o teclado iria enviar dados
+  * Você ficou testando o teclado (via SO) até que ele enviasse dados
+* Funciona sempre na forma de um laço, onde o processador fica testando o periférico até que ele esteja pronto
+* Útil para poucos dados
+* Alternativa para volumes imensos de dados previsíveis
+
+## Interrupções
+
+* O programa/sistema operacional configura o periférico para avisar quando um evento aconteceu
+  * O usuário moveu o mouse
+  * Uma tecla foi apertada
+  * Chegou um pacote de rede
+  * Um disco/ssd está pronto para transferir dados
+* O periférico avisa o processador quando o evento acontece
+* Uma rotina de tratamento de interrupção é executada
+* O processador volta a executar o programa que estava sendo executado
+
+## Como interromper um processador
+
+* Um sinal elétrico ou mensagem pelo barramento é enviado ao processador
+* O processador interrompe a execução do programa atual
+  * Salva o estado do programa atual (que estado?)
+  * Executa uma rotina de tratamento de interrupção
+  * Restaura o estado do programa atual
+* Existem múltiplas formas de tratamento de interrupção
+  * Vetor de interrupção
+  * Vetor de rotinas de interrupção
+  * Tratador único de interrupção
+
+## Vetor de Interrupção
+
+* Cada interrupção tem um identificador numérico único
+* O processador possui, em memória, um vetor com endereços das rotinas de tratamento de interrupção
+* Ao receber uma interrupção, o processador consulta o vetor e salta para o endereço indicado
+* O tratador de interrupção é responsável por identificar detalhes da causa e realizar o tratamento adequado
+* Esse mecanismo tem a vantagem de ter rotinas simplificadas (específicas) de tratamento
+* É possível colocar o mesmo tratador em múltiplas entradas do vetor
+
+## Vetor de Rotinas de Interrupção
+
+* Ao invés de um vetor de endereços, tem-se um vetor de pequenas rotinas de tratamento
+  * O tamanho máximo da rotina é definido. Ex.: 4 instruções
+  * Para rotinas maiores, salta-se para outro lugar da memória
+* O vetor de rotinas é indexado pelo identificador da interrupção
+* Funciona de forma similar ao vetor de interrupção
+* Quando não possuir tratador, a própria rotina retorna imediatamente
+
+## Tratador Único de Interrupção
+
+* O processador possui um único tratador de interrupção
+* O tratador é responsável por identificar a causa da interrupção e executar o tratamento adequado
+* A causa é armazenada num registrador especial do processador que é consultado ao executar a rotina de tratamento
+* Simplifica o processo de início do tratamento de interrupção mas exigte uma estrutura estilo `switch` para identificar a causa
+
+## Como salvar o estado de um processador quando acontece uma interrupção?
+
+## Salvando o estado do processador
+
+* Todos os registradores de uso geral podem estar ocupados (`x1` a `x31`)
+* O processador precisa salvar o estado de todos eles
+* O processador precisa salvar o endereço atual de execução (`pc`)
+* Existem registradores extras para fazer a gestão de interrupções
+  * Registrador de causa
+  * Registrador de endereço de retorno
+  * Registrador de reserva
+
+## Registradores de estado do processador
+
+* Os registradores de estado do processador são chamados de CSR (Control Status Register)
+  * `csrr` lê um registrador de status, `csrw` escreve um registrador de status e `csrrw` lê e escreve um registrador de status
+  * `mtvec` é o registrador de endereço de tratamento de interrupção
+  * `mepc` é o registrador que contém o `pc` do endereço da interrupção
+  * `mcause` é o registrador que contém a causa da interrupção
+  * `mtval` contém informações extras sobre a interrupção (depende da causa)
+  * `mscratch` é um registrador de uso geral que pode ser usado para salvar o estado do processador (rascunho)
+
+## Uma rotina de tratamento de interrupção
+
+* Inicia com o `mepc`, `mcause` e `mtval` com informações sobre a interrupção
+* Salva algum registrador do processador em `mscratch`
+* Utiliza esse registrador para apontar para uma posição segura de memória
+* Salva os demais registradores nessa região de memória (inclusive o `sp`)
+* Define uma nova pilha
+* Executa a rotina de tratamento
+* Retorna os registradores para seus valores originais
+* Copia `mtvec` para `pc`
+
+## Integração de assembly com outras linguagens
+
+* O assembly é uma linguagem de baixo nível
+* É possível integrar código assembly com código de outras linguagens
+* As convenções de chamadas de funções são as mesmas para assembly e outras linguagens
+* Escreva seu código de forma **bem comportada** e ele pode ser integrado com outras linguagens
+
+## Exemplo
+
+```C
+#include <stdio.h>
+
+int main()
+{
+  puts("Hello World!\n");
+}
 ```
-gcd:   cmp r0, r1
-       beq fim
-       blt menor
-       sub r0, r0, r1
-       bal gcd
-menor: sub r1, r1, r0
-       bal gcd 
-fim:
+
+compilado com:
+
+```bash
+$ riscv64-linux-gnu-gcc hello.c -S hello.s
 ```
 
-* ARM com condicional
+## Convertido para assembly (hello.s)
+
+```mipsasm
+	.file	"hello.c"
+	.option pic
+	.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0"
+	.attribute unaligned_access, 0
+	.attribute stack_align, 16
+	.text
+	.section	.rodata
+	.align	3
+.LC0:
+	.string	"Hello World!\n"
+	.text
+	.align	1
+	.globl	main
+	.type	main, @function
+main:
+	addi	sp,sp,-16
+	sd	ra,8(sp)
+	sd	s0,0(sp)
+	addi	s0,sp,16
+	lla	a0,.LC0
+	call	puts@plt
+	li	a5,0
+	mv	a0,a5
+	ld	ra,8(sp)
+	ld	s0,0(sp)
+	addi	sp,sp,16
+	jr	ra
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 12.2.0-14ubuntu2) 12.2.0"
+	.section	.note.GNU-stack,"",@progbits
 ```
-gcd:  cmp   r0, r1
-      subgt r0, r0, r1
-      sublt r1, r1, r0
-      bne   gcd
-```
-
-## Load e Store
-
-* Como o RISC-V, somente instruções explícitas de acesso à memória conseguem ler e escrever dados na memória
-* Load: Lê dados da memória
-  * LDR ou LDM
-* Store: Escreve dados na memória
-  * STR ou STM
-
-## Exemplos
-
-* ```ldr r0, [r1, #12]```
-  * Supondo r1 = 20, acessa a posição 32 (=20+12) de memória e guarda o valor no registrador r0.
-* ```str r5, [r9, #-20]```
-  * Supondo r9 = 100, grava o valor do registrador r5 na posição 80 (=100-20) de memória.
-* Se incluir uma exclamação (!) após a instrução, atualiza o registrador de índice (r1, r9) pela constante fornecida.
-
-## Acesso Múltiplo à memória
-
-* STM e LDM executam mais de uma operação de memória.
-* Precisam de um sufixo para indicar a direção desejada do acesso à memória:
-  * Endereço crescente ou decrescente
-  * Posição inicial preenchida ou não preenchida
-
-* LDM<sufixo> r1, {r0, r2, r3}
-* STM<sufixo> r1, {r0, r2, r3}
-
-* Facilita a implementação da pilha ao utilizar o sufixo FD
-  * ```STMFD r13!, {r4-r7}```
-  * ```LDMFD r13!, {r4-r7}```
-* A esclamação atualiza o registrador de índice com o último valor
-
----
-![h:600](resumo-arm.png)
-
-## Arquitetura x86
-
-* Disponível nas versões 16 bits, 32 bits e 64 bits
-* Apesar da inclusão de novas instruções e registradores, o assembly foi sendo simplificado
-  * Existem inúmeras restrições de uso de registradores no modo 16 bits que foram sendo relaxados
-* Instruções tipicamente de dois endereços:
-  * X = X op Y
-* As instruções podem acessar diretamente a memória sem a necessidade de LW ou SW como no RISC-V
-
-## Registradores
-
-* Considerando o modo de 16 bits, existem 8 registradores de uso geral
-  * AX, BX, CX, DX, SI, DI, BP, SP
-  * Os 4 primeiros podem ser divididos em H e L: AH e AL, BH e BL, CH e CL, DH e DL
-* Considerando o modo de 32 bits, existem 8 registradores de uso geral
-  * EAX, EBX, ECX, EDX, ESI, EDI, EBP, ESP
-* Considerando o modo de 64 bits, existem 16 registradores de uso geral
-  * RAX, RBX, RCX, RDX, RSI, RDI, RBP, RSP, R8, R9, R10, R11, R12, R13, R14, R15
-
-## Modos de endereçamento
-
-* Os modos de endereçamento são mais complexos que no RISC-V
-* Existem muitas variações de endereçamento conforme o exemplo abaixo utilizando a instrução MOV (copia o dado da direita para esquerda):
-
-```
-mov [edx],                      eax
-mov [ebx+ebp],                  eax
-mov [esi+edi],                  eax
-mov [esp+ecx],                  eax
-mov [ebx*4 + 0x1a],             eax
-mov [ebx + ebp*8 + 0xab12cd34], eax
-mov [esp + ebx*2],              eax
-mov [0xffffaaaa],               eax
-
-mov [esp*2], eax
-```
-
-## Pilha
-
-* A pilha é implementada utilizando o registrador SP
-* Duas instruções especiais:
-  * ```PUSH``` empilha o valor de um registrador
-  * ```POP``` desempilha o valor para um registrador
-
-## Instruções de salto
-
-* As instruções de salto são similares ao RISC-V
-* ```JMP``` para salto incondicional para um endereço
-* Instruções de salto condicional
-  * ```JE```: igual
-  * ```JNE```: diferente
-  * ```JG```: maior
-  * ```JL```: menor
-  * ```JGE```: maior ou igual
-  * ```JLE```: menor ou igual
-* As instruções de salto condicional são baseadas no resultado de uma operação anterior, que pode ser ```CMP``` ou uma aritmética qualquer
-
-## Funções
-
-* Instrução ```CALL``` para chamar uma função
-* Instrução ```RET``` para retornar de uma função
-
-* O padrão original é passar parâmetros pela pilha com ```PUSH``` e ```POP```
-* A ```CALL``` empilha o endereço de retorno
-* A ```RET``` desempilha o endereço de retorno
-
-## Algumas instruções
-
-* As instruções de 2 endereços operam sobre os dois parâmetros e guardam a resposta no primeiro
-* ```MOV``` copia o dado da direita para esquerda
-* ```ADD``` / ```SUB``` soma/subtrai o dado da direita do da esquerda
-* ```INC``` / ```DEC``` incrementa/decrementa o registrador
-* ```CMP``` compara os dois dados e atualiza o registrador de flags
-* ```AND``` / ```OR``` / ```XOR``` operações lógicas
-* ```NOT``` / ```NEG``` operações lógicas unárias
-* ```MULT``` / ```DIV``` multiplicação e divisão
-* ```XCHG``` troca o conteúdo de dois registradores
-* ```SHL``` / ```SHR``` deslocamento de bits para esquerda e direita
-
-## Movimentando bytes/palavras
-
-* x86 possui instruções específicas para facilitar a cópia de dados da memória
-  * ```MOVSB```: copia um byte
-  * ```MOVSW```: copia uma palavra (2 bytes)
-  * ```MOVSD```: copia um double word (4 bytes)
-  * ```MOVSQ```: copia um quad word (8 bytes)
-* Os registradores SI e DI são utilizados para indicar a origem e destino da cópia e são incrementados automaticamente
-* Pode utilizar um prefixo de repetição para repetir a operação, supondo CX=20
-  * ```REPCXZ MOVSB```: copia 20 bytes
-
-## Conclusões
-
-* As arquiteturas são diferentes e as instruções também
-* Não existe um **assembly** universal
-* Se você quer escrever no currículo, especifique a arquitetura
-* Desconfie de quem escrever que sabe **assembler** ao invés de **assembly**
-* As ideias gerais e granularidade são as mesmas, você terá que quebrar suas tarefas em instruções que fazem pouca coisa por vez, independente da arquitetura
-* Uma forma básica de se familiarizar com o assembly de uma arquitetura é pedindo ao compilador para gera-lo para você, passando a opção -S ao gcc por exemplo
