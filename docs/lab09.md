@@ -18,7 +18,7 @@ A pilha é uma estrutura de dados gerenciada completamente por software (seu pro
 * Argumentos que você precisa passar para a função que você está chamando que não couberem nos registradores `a` (como o nono, décimo, etc.)
 * Variáveis locais que você precisa alocar na memória
 
-O início de uma função tem, então a seguinte estrutura se não houver variável local:
+O início de uma função tem, então ,a seguinte estrutura se não houver variável local:
 
 ```mips-asm
 funcao: addi sp, sp, -12

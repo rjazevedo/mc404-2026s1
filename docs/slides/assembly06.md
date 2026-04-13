@@ -27,7 +27,7 @@ main: addi sp, sp, -4  # libera espaço para 1 registrador
       addi sp, sp, -4  # libera espaço para 1 registrador
       sw   s1, 0(sp)   # guarda registrador r1
       addi sp, sp, -4  # libera espaço para 1 registrador
-      sw   ra, 0(s0)   # guarda o endereço de retorno
+      sw   ra, 0(sp)   # guarda o endereço de retorno
 ...
 ... # muito código por aqui, incluindo a chamada de alguma função
 ...
@@ -48,7 +48,7 @@ main: addi sp, sp, -4  # libera espaço para 1 registrador
 main: addi sp, sp, -12  # 3 instruções viraram 1
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -67,7 +67,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -88,7 +88,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12  # <---
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -109,7 +109,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)    # <---
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -130,7 +130,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12 
       sw   s0, 8(sp)
       sw   s1, 4(sp)   # <---
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -151,7 +151,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)   # <---
+      sw   ra, 0(sp)   # <---
 ...
 ... # muito código por aqui
 ...
@@ -172,7 +172,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -193,7 +193,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -214,7 +214,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
@@ -236,7 +236,7 @@ Suponha que `sp = 1000`, `s0 = 20`, `s1 = 30` e `ra = 100`.
 main: addi sp, sp, -12
       sw   s0, 8(sp)
       sw   s1, 4(sp)
-      sw   ra, 0(s0)
+      sw   ra, 0(sp)
 ...
 ... # muito código por aqui
 ...
